@@ -2,6 +2,10 @@
   (:require [clojure.test :refer :all]
             [devspect-api.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest test-parse-tracker-xml
+  (def tracker-xml (java.io.StringReader. (slurp "pivotal.xml")))
+
+  (testing "Extracts the author name"
+    (is (= "James Kirk" (author-name (parse-tracker-xml tracker-xml)))))
+  )
+
