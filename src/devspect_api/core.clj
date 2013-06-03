@@ -20,3 +20,7 @@
       (tree-seq :content :content ds))))))
 
 (defn author-name [ds] (get-attribute :author ds))
+(defn description [ds] (get-attribute :description ds))
+(defn occurred-at [ds] (get-attribute :occurred_at ds))
+(defn activity-type [ds] (get-attribute :event_type ds))
+(defn project-id [ds] (get-attribute :project_id ds))
