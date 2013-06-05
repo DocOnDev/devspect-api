@@ -1,7 +1,6 @@
 (ns devspect-api.core
   (:use compojure.core)
   (:use ring.adapter.jetty)
-  (:use korma.db)
 
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
@@ -9,14 +8,9 @@
             [clojure.string :as str]
             [clojure.data.xml :as xml]))
 
-(def pg {
-     :db "devspect-api"
-     :user "c"
-     :host "localhost"
-     :port "4567"
-     :delimiters ""})
-
-(defdb prod (postgres pg))
+(def db
+  {:subprotocol "postgresql"
+   :subname "//127.0.0.1:5432/devspect-api" })
 
 (defroutes my-routes
   (GET "/" [] "this is compojure")

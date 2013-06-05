@@ -6,8 +6,8 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [ring "1.1.8"]
                  [compojure "1.1.5"]
-                 [korma "0.3.0-RC5"]
-                 [org.postgresql/postgresql "9.2-1002-jdbc4"]
+                 [org.clojure/java.jdbc "0.3.0-alpha4"]
+                 [postgresql/postgresql "8.4-702.jdbc4"]
                  [org.clojure/data.xml "0.0.7"]]
 
   :plugins [[lein-ring "0.8.5"]]
