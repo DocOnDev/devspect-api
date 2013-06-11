@@ -1,8 +1,7 @@
 (ns devspect-api.core
-  (:use compojure.core)
-  (:use ring.adapter.jetty)
-
-  (:require [compojure.route :as route]
+  (:require [compojure.core :refer :all]
+            [ring.adapter.jetty :refer :all]
+            [compojure.route :as route]
             [compojure.handler :as handler]
             [clojure.java.jdbc :as jdbc]
             [clojure.java.jdbc.sql :as sql]
@@ -11,7 +10,10 @@
 
 (defn parse-dt [input]
   (let [local-dt-fmt (java.text.SimpleDateFormat. "yyyy/MM/dd HH:mm:ss zzz")]
-    (java.sql.Timestamp. (.getTime (.parse local-dt-fmt input)))))
+    (->
+      (.parse local-dt-fmt input)
+      (.getTime)
+      (java.sql.Timestamp. ))))
 
 (defn get-attribute [key ds]
   (->> ds
