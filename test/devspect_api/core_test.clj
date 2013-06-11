@@ -5,7 +5,7 @@
 (def xml-string (slurp "pivotal.xml"))
 
 (deftest test-parse-tracker-xml
-  (def tracker-ds (parse-tracker-xml xml-string))
+  (def tracker-ds (clojure.data.xml/parse-str xml-string))
 
   (testing "Extracts the author name"
     (is (= "James Kirk" (author-name tracker-ds))))

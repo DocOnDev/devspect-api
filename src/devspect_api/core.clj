@@ -9,9 +9,6 @@
             [clojure.string :as str]
             [clojure.data.xml :as xml]))
 
-
-(defn parse-tracker-xml [xml-string] (xml/parse-str xml-string))
-
 (defn parse-dt [input]
   (let [local-dt-fmt (java.text.SimpleDateFormat. "yyyy/MM/dd HH:mm:ss zzz")]
     (java.sql.Timestamp. (.getTime (.parse local-dt-fmt input)))))
@@ -35,7 +32,7 @@
    :subname "//127.0.0.1:5432/devspect-api" })
 
 (defn handle-pivotal-post [xml]
-  (let [ds (parse-tracker-xml xml)]
+  (let [ds (xml/parse-str xml)]
     (jdbc/insert! db :pivotal_tracker
        {:author_name (author-name ds)
         :description (description ds)
