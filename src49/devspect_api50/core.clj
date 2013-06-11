@@ -17,10 +17,12 @@
     (java.sql.Timestamp. (.getTime (.parse local-dt-fmt input)))))
 
 (defn get-attribute [key ds]
-  (first (:content
-    (first (filter
-      #(= key (:tag %1))
-      (tree-seq :content :content ds))))))
+  (->> ds
+       (tree-seq :content :content)
+       (filter #(= key (:tag %)))
+       (first)
+       (:content)
+       (first)))
 
 (defn author-name [ds] (get-attribute :author ds))
 (defn description [ds] (get-attribute :description ds))
