@@ -10,7 +10,7 @@
             [clojure.data.xml :as xml]))
 
 
-(defn parse-tracker-xml [xml-string] (xml/parse (java.io.StringReader. xml-string)))
+(defn parse-tracker-xml [xml-string] (xml/parse-str xml-string))
 
 (defn parse-dt [input]
   (let [local-dt-fmt (java.text.SimpleDateFormat. "yyyy/MM/dd HH:mm:ss zzz")]
