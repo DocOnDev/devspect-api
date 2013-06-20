@@ -13,7 +13,7 @@ CREATE TABLE pivotal_tracker_story_statuses (
   description CHARACTER VARYING
 );
 
-CREATE TABLE pivotal_tracker_story_states (
+CREATE TABLE pivotal_tracker_story_histories (
   id SERIAL PRIMARY KEY,
   start_date TIMESTAMP WITH TIME ZONE,
   end_date TIMESTAMP WITH TIME ZONE,
@@ -26,7 +26,6 @@ CREATE TABLE pivotal_tracker_stories (
   name CHARACTER VARYING,
   accepted_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE,
-  current_status_id INTEGER,
   deadline INTEGER,
   description CHARACTER VARYING,
   estimate INTEGER,
@@ -57,3 +56,12 @@ CREATE TABLE pivotal_tracker_projects (
   velocity_scheme CHARACTER VARYING,
   week_start_day CHARACTER VARYING
 );
+
+CREATE VIEW cfd_summary AS
+  SELECT date_trunc('day', h.start_date) AS status_date,
+         a.description, sum(1)           AS count
+  FROM pivotal_tracker_stories s INNER JOIN
+       pivotal_tracker_story_histories h ON h.story_id = s.id INNER JOIN
+       pivotal_tracker_story_statuses a ON a.id = h.status_id
+  GROUP BY status_date,
+           a.description
