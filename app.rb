@@ -33,8 +33,16 @@ class StoryStatus  < Sequel::Model(:pivotal_tracker_story_statuses); end
 class StoryHistory < Sequel::Model(:pivotal_tracker_story_histories); end
 
 class CumulativeFlow < Sequel::Model(:cfd_summary)
+  STATUS_MAP = { icebox:    "unscheduled",
+                 backlog:   "unstarted" }
+
   def to_hash
-    @hash ||= { self.description.to_sym => self.count }
+    @hash ||= { hash_key => self.count }
+  end
+
+  private
+  def hash_key
+    @hash_key ||= STATUS_MAP.invert[self.description] || self.description.to_sym
   end
 end
 
