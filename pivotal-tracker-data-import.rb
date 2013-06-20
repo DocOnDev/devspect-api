@@ -7,10 +7,10 @@ require 'pivotal-tracker'
 require 'sequel'
 
 DB = Sequel.connect('postgres://localhost:5432/devspect-api')
-stories  =       DB[:pivotal_tracker_stories]
-projects =       DB[:pivotal_tracker_projects]
-story_statuses = DB[:pivotal_tracker_story_statuses]
-story_states   = DB[:pivotal_tracker_story_states]
+stories  =        DB[:pivotal_tracker_stories]
+projects =        DB[:pivotal_tracker_projects]
+story_statuses =  DB[:pivotal_tracker_story_statuses]
+story_histories = DB[:pivotal_tracker_story_histories]
 
 PivotalTracker::Client.token = '8b2ba20d2a1b4d4309a4868d62f53e7a'
 PivotalTracker::Client.use_ssl = true
@@ -38,14 +38,11 @@ project.stories.all.each do |story|
   class StoryStatus < Sequel::Model(:pivotal_tracker_story_statuses)
   end
 
-  current_status_id = StoryStatus.find_or_create(description: story.current_state).id
-
   stories.insert(
     id:                story.id,
     name:              story.name,
     accepted_at:       story.accepted_at,
     created_at:        story.created_at,
-    current_status_id: current_status_id,
     deadline:          story.deadline,
     description:       story.description,
     estimate:          story.estimate,
@@ -61,7 +58,9 @@ project.stories.all.each do |story|
     url:               story.url
   )
 
-  story_states.insert(
+  current_status_id = StoryStatus.find_or_create(description: story.current_state).id
+
+  story_histories.insert(
     start_date: Time.now, # local?
     status_id:  current_status_id,
     story_id:   story.id
