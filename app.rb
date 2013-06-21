@@ -1,17 +1,9 @@
 # TODO:
 #
-# figure out how to get message expectations in tests
-#
-# insert a story if one does not exist
+# insert a story from activity feed if one does not exist
 #
 # determine if we need to keep old descriptions/titles as part of
 # history
-#
-# queries to serve JSON hashes to client
-# get /cfd-data, {}
-# {accepted: Story.execute_sql("SELECT sum(accepted)" ...}
-# Create SQL view in schema to serve aggregates? Create model to
-# wrap view?
 #
 # support for GitHub webhooks
 

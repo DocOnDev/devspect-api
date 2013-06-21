@@ -103,18 +103,6 @@ class AppTest < MiniTest::Unit::TestCase
     assert_equal expected, CumulativeFlow.new(description: "foxy", count: 3).to_hash
   end
 
-
-  # def test_create_history_predicate_returns_true_when_history_is_no_longer_valid
-  #   {"icebox":0, 
-  #    "backlog":3,
-  #    "started":0,
-  #    "finished":2,
-  #    "delivered":0,
-  #    "accepted":1,
-  #    "rejected":1}
-  #   get '/cfd'
-  # end
-
   # def test_closing_history_when_none_exists
   #   assert close_history()
   # end
@@ -126,5 +114,4 @@ class AppTest < MiniTest::Unit::TestCase
   # def test_closing_history_when_changing_status
   #   # have history, changing to a new state
   # end
-
 end
