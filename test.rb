@@ -23,16 +23,7 @@ class AppTest < MiniTest::Unit::TestCase
     get "/cfd"
     assert last_response.ok?
 
-    expected = {"2012-06-20" => {
-      icebox:    7,
-      backlog:   14,
-      started:   2,
-      finished:  1,
-      delivered: 1,
-      accepted:  41,
-      rejected:  1 }}.to_json
-
-    assert_equal expected, last_response.body
+    assert_equal CumulativeFlow.report.to_json, last_response.body
   end
 
   def test_post_pivotal_tracker_xml
@@ -87,10 +78,31 @@ class AppTest < MiniTest::Unit::TestCase
 
   # model tests
   # what an astronomical mess!
+  def test_cumulative_flow_report
+    # TODO 2013/06/21
+    # need to test support for multiple dates/keys
+    # add logic to import process to get accurate start/end dates
+    # for histories, e.g. when was it accepted as start_date...
+    counts = {
+      icebox:    7,
+      backlog:   14,
+      started:   2,
+      finished:  1,
+      delivered: 1,
+      accepted:  41,
+      rejected:  1
+    }.sort
+
+    expected = { "2013-06-20" => Hash[counts] }
+
+    assert_equal expected, CumulativeFlow.report
+  end
+
   def test_cumulative_flow_to_hash
     expected = { foxy: 3 }
     assert_equal expected, CumulativeFlow.new(description: "foxy", count: 3).to_hash
   end
+
 
   # def test_create_history_predicate_returns_true_when_history_is_no_longer_valid
   #   {"icebox":0, 

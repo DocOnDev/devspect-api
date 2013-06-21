@@ -36,6 +36,13 @@ class CumulativeFlow < Sequel::Model(:cfd_summary)
   STATUS_MAP = { icebox:    "unscheduled",
                  backlog:   "unstarted" }
 
+  def self.report
+    self.all.each_with_object(Hash.new({})) do |d, hsh|
+      key = d.status_date.strftime("%Y-%m-%d")
+      hsh[key] = Hash[hsh[key].merge(d.to_hash).sort]
+    end
+  end
+
   def to_hash
     @hash ||= { hash_key => self.count }
   end
@@ -51,7 +58,8 @@ get '/' do
 end
 
 get '/cfd' do
-  cfd_hash.to_json
+  content_type :json
+  CumulativeFlow.report.to_json
 end
 
 post '/pivotal-tracker' do
@@ -59,24 +67,6 @@ post '/pivotal-tracker' do
   import_activity Nokogiri::XML(request.body.read)
   "OK"
 end
-
-def cfd_hash
-  # status_dates = summaries.map(&:status_date).uniq
-  # counts = status_dates.map {|d| {d => summaries.select {|s| s.status_date.eql? d } } }
-  CumulativeFlow.all.each_with_object(Hash.new({})) do |d, hsh|
-    key = d.status_date.strftime("%Y-%m-%d")
-    hsh[key] = hsh[key].merge(d.to_hash)
-  end
-end
-
-#   { icebox:    data.find {|s| s.description.eql?("unscheduled") }.count,
-#     backlog:   data.find {|s| s.description.eql?("unstarted") }.count,
-#     started:   data.find {|s| s.description.eql?("started") }.count,
-#     finished:  data.find {|s| s.description.eql?("finished") }.count,
-#     delivered: data.find {|s| s.description.eql?("delivered") }.count,
-#     accepted:  data.find {|s| s.description.eql?("accepted") }.count,
-#     rejected:  data.find {|s| s.description.eql?("rejected") }.count }
-# end
 
 def import_activity(doc)
   story_id, current_status = parse_id_and_status(doc)
