@@ -35,3 +35,9 @@
   (is (= 200 (:status (post-request "/pivotal-tracker" app xml-string))))
   (is (= "OK" (:body (post-request "/pivotal-tracker" app xml-string))))
 )
+
+(deftest test-works
+ ;; on webhook event, update current status record with end date
+ ;; and create a new status record if state changed
+ ;; and reflect new name/state (something like that)
+ (is (= true false)))
