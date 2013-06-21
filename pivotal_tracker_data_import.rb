@@ -61,7 +61,7 @@ project.stories.all.each do |story|
   current_status_id = StoryStatus.find_or_create(description: story.current_state).id
 
   story_histories.insert(
-    start_date: Time.now, # local?
+    start_date: (story.accepted_at || story.created_at || Time.now), # local?
     status_id:  current_status_id,
     story_id:   story.id
   )
