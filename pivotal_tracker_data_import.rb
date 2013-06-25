@@ -2,7 +2,6 @@ require 'bundler'
 
 Bundler.setup
 
-require 'pry'
 require 'pivotal-tracker'
 require 'sequel'
 
