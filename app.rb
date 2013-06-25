@@ -11,7 +11,6 @@ require 'bundler'
 
 Bundler.setup
 
-require 'pry'
 require 'json'
 require 'sequel'
 require 'sinatra'
