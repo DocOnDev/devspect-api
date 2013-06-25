@@ -17,7 +17,7 @@ require 'sequel'
 require 'sinatra'
 require 'nokogiri'
 
-DB = Sequel.connect(ENV['DATABASE_URL'] || postgres://localhost:5432/devspect-api')
+DB = Sequel.connect(ENV['DATABASE_URL'] || 'postgres://localhost:5432/devspect-api')
 
 class Story        < Sequel::Model(:pivotal_tracker_stories); end
 class Project      < Sequel::Model(:pivotal_tracker_projects); end
