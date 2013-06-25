@@ -5,7 +5,7 @@ Bundler.setup
 require 'pivotal-tracker'
 require 'sequel'
 
-DB = Sequel.connect('postgres://localhost:5432/devspect-api')
+DB = Sequel.connect(ENV['DATABASE_URL'] || 'postgres://localhost:5432/devspect-api')
 stories  =        DB[:pivotal_tracker_stories]
 projects =        DB[:pivotal_tracker_projects]
 story_statuses =  DB[:pivotal_tracker_story_statuses]
