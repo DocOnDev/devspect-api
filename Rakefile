@@ -21,7 +21,7 @@ namespace :db do
     Rake::Task['environment'].invoke(env)
 
     require 'sequel/extensions/migration'
-    Sequel::Migrator.apply(ENV['DATABASE_URL'], "migrations")
+    Sequel::Migrator.apply(DB, "migrations")
   end
 
   desc "Rollback the database"
@@ -30,16 +30,16 @@ namespace :db do
     Rake::Task['environment'].invoke(env)
 
     require 'sequel/extensions/migration'
-    version = (row = ENV['DATABASE_URL'][:schema_info].first) ? row[:version] : nil
-    Sequel::Migrator.apply(ENV['DATABASE_URL'], "migrations", version - 1)
+    version = (row = DB[:schema_info].first) ? row[:version] : nil
+    Sequel::Migrator.apply(DB, "migrations", version - 1)
   end
 
   desc "Nuke the database (drop all tables)"
   task :nuke, :env do |cmd, args|
     env = args[:env] || "development"
     Rake::Task['environment'].invoke(env)
-    ENV['DATABASE_URL'].tables.each do |table|
-      ENV['DATABASE_URL'].run("DROP TABLE #{table}")
+    DB.tables.each do |table|
+      DB.run("DROP TABLE #{table}")
     end
   end
 
