@@ -29,7 +29,7 @@ projects.insert(
   labels:                     project.labels,
   last_activity_at:           project.last_activity_at,
   name:                       project.name,
-  point_scale:                Sequel.pg_array(project.point_scale, :integer),
+  point_scale:                project.point_scale.to_s,
   velocity_scheme:            project.velocity_scheme,
   week_start_day:             project.week_start_day
 )
