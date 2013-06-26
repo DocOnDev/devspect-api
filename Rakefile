@@ -46,3 +46,13 @@ namespace :db do
   desc "Reset the database"
   task :reset, [:env] => [:nuke, :migrate]
 end
+
+namespace :data do
+  desc "Import data from Pivotal Tracker"
+  task :import, :env do |cmd, args|
+    env = args[:env] || "development"
+    Rake::Task['environment'].invoke(env)
+
+    require 'pivotal_tracker_data_import'
+  end
+end
