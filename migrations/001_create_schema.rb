@@ -60,7 +60,7 @@ Sequel.migration do
       String :labels
       DateTime :last_activity_at
       String :name
-      column :point_scale, 'INTEGER[]'
+      String :point_scale
       String :velocity_scheme
       String :week_start_day
     end
