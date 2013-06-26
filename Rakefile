@@ -53,6 +53,6 @@ namespace :data do
     env = args[:env] || "development"
     Rake::Task['environment'].invoke(env)
 
-    require 'pivotal_tracker_data_import'
+    require './pivotal_tracker_data_import'
   end
 end
