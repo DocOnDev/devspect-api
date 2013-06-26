@@ -27,20 +27,32 @@ class CumulativeFlow < Sequel::Model(:cfd_summary)
   STATUS_MAP = { icebox:    "unscheduled",
                  backlog:   "unstarted" }
 
+  def self.statuses
+    @statuses ||= self.distinct.order(:description).select_map(:description).map do |desc|
+      self.hash_key_for(desc)
+    end
+  end
+
+  def self.default_counts
+    @default_counts ||= statuses.each_with_object({}) {|s, hsh| hsh[s] = 0 }
+  end
+
   def self.report
-    self.all.each_with_object(Hash.new({})) do |d, hsh|
+    self.order(:status_date).all.each_with_object(Hash.new({})) do |d, hsh|
       key = d.status_date.strftime("%Y-%m-%d")
-      hsh[key] = Hash[hsh[key].merge(d.to_hash).sort]
+      old_value = hsh[key]
+      new_value = default_counts.merge(old_value).merge(d.to_hash)
+      hsh[key] = Hash[new_value.sort]
     end
   end
 
   def to_hash
-    @hash ||= { hash_key => self.count }
+    @hash ||= { self.class.hash_key_for(self.description) => self.count }
   end
 
   private
-  def hash_key
-    @hash_key ||= STATUS_MAP.invert[self.description] || self.description.to_sym
+  def self.hash_key_for(description)
+    STATUS_MAP.invert[description] || description.to_sym
   end
 end
 
