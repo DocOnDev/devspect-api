@@ -65,7 +65,7 @@ Sequel.migration do
       String :week_start_day
     end
 
-    create_or_replace_view(:cfd_summary, <<-sql
+    cfd_summary_sql = <<-sql
       SELECT date_trunc('day', h.start_date) AS status_date,
              a.description, sum(1)           AS count
       FROM pivotal_tracker_stories s INNER JOIN
@@ -74,5 +74,7 @@ Sequel.migration do
       GROUP BY status_date,
                a.description
     sql
+
+    create_or_replace_view(:cfd_summary, cfd_summary_sql)
   end
 end
