@@ -11,7 +11,7 @@ end
 
 task :environment, [:env] => 'bundler:setup' do |cmd, args|
   ENV["RACK_ENV"] = args[:env] || "development"
-  require "./lib/foo"
+  require "./app"
 end
 
 namespace :db do
