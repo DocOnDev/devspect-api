@@ -79,6 +79,10 @@ get '/cfd' do
 end
 
 post '/pivotal-tracker' do
+  puts "*" * 100
+  puts "hello from API endpoint"
+  puts "*" * 100
+
   content_type :xml
   import_activity Nokogiri::XML(request.body.read)
   "OK"
@@ -87,7 +91,6 @@ end
 def import_activity(doc)
   story_id, current_status = parse_id_and_status(doc)
   story_status = StoryStatus.find(description: current_status)
-
 
   puts "*" * 100
   puts "story_id: #{story_id}, current_status: #{current_status}"
