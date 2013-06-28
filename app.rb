@@ -79,9 +79,12 @@ get '/cfd' do
 end
 
 post '/pivotal-tracker' do
-  puts "*" * 100
-  puts "hello from API endpoint"
-  puts "*" * 100
+  require 'logger'
+  @logger = Logger.new
+
+  @logger.log("*" * 100)
+  @logger.log("hello from API endpoint")
+  @logger.log("*" * 100)
 
   content_type :xml
   import_activity Nokogiri::XML(request.body.read)
@@ -92,10 +95,10 @@ def import_activity(doc)
   story_id, current_status = parse_id_and_status(doc)
   story_status = StoryStatus.find(description: current_status)
 
-  puts "*" * 100
-  puts "story_id: #{story_id}, current_status: #{current_status}"
-  puts "story_status: #{ story_status.inspect }"
-  puts "*" * 100
+  @logger.log( "*" * 100 )
+  @logger.log( "story_id: #{story_id}, current_status: #{current_status}" )
+  @logger.log( "story_status: #{ story_status.inspect }" )
+  @logger.log( "*" * 100 )
 
   new_status_id = story_status.id
 
