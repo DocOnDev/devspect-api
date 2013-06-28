@@ -28,7 +28,7 @@ class CumulativeFlow < Sequel::Model(:cfd_summary)
                  backlog:   "unstarted" }
 
   def self.statuses
-    @statuses ||= self.distinct.order(:description).select_map(:description).map do |desc|
+    @statuses ||= StoryStatus.order(:position).select_map(:description).map do |desc|
       self.hash_key_for(desc)
     end
   end
