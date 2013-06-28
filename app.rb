@@ -86,7 +86,15 @@ end
 
 def import_activity(doc)
   story_id, current_status = parse_id_and_status(doc)
-  new_status_id            = StoryStatus.find(description: current_status).id
+  story_status = StoryStatus.find(description: current_status)
+
+
+  puts "*" * 100
+  puts "story_id: #{story_id}, current_status: #{current_status}"
+  puts "story_status: #{ story_status.inspect }"
+  puts "*" * 100
+
+  new_status_id = story_status.id
 
   current_history = StoryHistory.find(story_id: story_id, end_date: nil)
 
