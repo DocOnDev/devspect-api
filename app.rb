@@ -42,7 +42,19 @@ class CumulativeFlow < Sequel::Model(:cfd_summary)
       key = d.status_date.strftime("%Y-%m-%d")
       old_value = hsh[key]
       new_value = default_counts.merge(old_value).merge(d.to_hash)
-      hsh[key] = Hash[new_value.sort]
+      hsh[key] = Hash[new_value]
+    end
+  end
+
+  def self.report_for_node_frontend
+    report_results = report
+    statuses.each_with_object([]) do |status, output|
+      output << {
+        name: status,
+        data: report_results.map do |day, counts|
+          [DateTime.parse(day).to_time.to_i * 1000, counts[status]]
+        end
+      }
     end
   end
 
@@ -62,7 +74,8 @@ end
 
 get '/cfd' do
   content_type :json
-  CumulativeFlow.report.to_json
+  # CumulativeFlow.report.to_json
+  CumulativeFlow.report_for_node_frontend.to_json
 end
 
 post '/pivotal-tracker' do
