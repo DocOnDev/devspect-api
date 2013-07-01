@@ -8,42 +8,19 @@ require_relative 'tracker'
 
 describe Tracker do
   it 'creates a story' do
-    fake_story = FakeModel.new
-    tracker = Tracker.new(fake_story, FakeModel.new)
-
     tracker.handle_activity(xml_doc)
 
-    attrs = {
-      "id"            => 52651969,
-      "name"          => "Test story to determine cause of webhook bug",
-      "created_at"    => DateTime.parse("2013/07/01 17:42:51 UTC"),
-      "description"   => "Does this give us different xml?",
-      "estimate"      => 2,
-      "story_type"    => "feature",
-      "owned_by"      => "Cory Flanigan",
-      "requested_by"  => "Cory Flanigan",
-      "project_id"    => 707539
-    }
-
-    expected = [:create_story, attrs]
+    expected = [:create_story, story_attrs]
 
     fake_story.data.length.must_equal 1
     fake_story.data.first.must_equal expected
   end
 
   it 'creates a history record on story creation' do
-    fake_history = FakeModel.new
-    tracker = Tracker.new(FakeModel.new, fake_history)
-
     tracker.handle_activity(xml_doc)
 
-    attrs = {
-      "start_date"    => DateTime.parse("2013/07/01 17:42:51 UTC"),
-      "current_state" => "unscheduled",
-      "story_id"      => 52651969,
-    }
+    expected = [:create_history, history_attrs]
 
-    expected = [:create_history, attrs]
     fake_history.data.length.must_equal 1
     fake_history.data.first.must_equal  expected
   end
@@ -79,6 +56,26 @@ describe Tracker do
 
   def xml_doc
     doc = Nokogiri::XML(create_story_xml)
+  end
+
+  def story_attrs
+    { "id"            => 52651969,
+      "name"          => "Test story to determine cause of webhook bug",
+      "created_at"    => DateTime.parse("2013/07/01 17:42:51 UTC"),
+      "description"   => "Does this give us different xml?",
+      "estimate"      => 2,
+      "story_type"    => "feature",
+      "owned_by"      => "Cory Flanigan",
+      "requested_by"  => "Cory Flanigan",
+      "project_id"    => 707539
+    }
+  end
+
+  def history_attrs
+    { "start_date"    => DateTime.parse("2013/07/01 17:42:51 UTC"),
+      "current_state" => "unscheduled",
+      "story_id"      => 52651969,
+    }
   end
 
   def create_story_xml
