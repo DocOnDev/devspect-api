@@ -92,6 +92,7 @@ def remote_pastelog(xml)
   request = Net::HTTP::Post.new("/10yl6iy1")
   request.body = xml
   response = http.request(request)
+  puts response
 end
 
 def import_activity(doc)
