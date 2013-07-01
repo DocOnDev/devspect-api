@@ -82,7 +82,7 @@ post '/pivotal-tracker' do
   require 'net/http'
   content_type :xml
   raw_tracker_xml = request.body.read
-  # remote_pastelog raw_tracker_xml
+  remote_pastelog raw_tracker_xml
   import_activity Nokogiri::XML(raw_tracker_xml)
   "OK"
 end
