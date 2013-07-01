@@ -18,7 +18,11 @@ require 'nokogiri'
 
 DB = Sequel.connect(ENV['DATABASE_URL'] || 'postgres://localhost:5432/devspect-api')
 
-class Story        < Sequel::Model(:pivotal_tracker_stories); end
+class Story        < Sequel::Model(:pivotal_tracker_stories)
+  def self.create_story(attrs)
+    new(attrs).save
+  end
+end
 class Project      < Sequel::Model(:pivotal_tracker_projects); end
 class StoryStatus  < Sequel::Model(:pivotal_tracker_story_statuses); end
 class StoryHistory < Sequel::Model(:pivotal_tracker_story_histories); end

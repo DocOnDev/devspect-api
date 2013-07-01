@@ -83,6 +83,33 @@
   </stories>
 </activity>
 
+<!-- CREATING A STORY WITH A DESCRIPTION -->
+<?xml version="1.0" encoding="UTF-8"?>
+<activity>
+  <id type="integer">381390077</id>
+  <version type="integer">612</version>
+  <event_type>story_create</event_type>
+  <occurred_at type="datetime">2013/07/01 19:52:26 UTC</occurred_at>
+  <author>Cory Flanigan</author>
+  <project_id type="integer">707539</project_id>
+  <description>Cory Flanigan added &quot;Test story with description&quot;</description>
+  <stories type="array">
+    <story>
+      <id type="integer">52662775</id>
+      <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52662775</url>
+      <name>Test story with description</name>
+      <story_type>feature</story_type>
+      <description>Does this give us different xml?</description>
+      <current_state>unscheduled</current_state>
+      <requested_by>Cory Flanigan</requested_by>
+    </story>
+  </stories>
+</activity>
+
+
+
+
+
 <!-- STARTING A CHORE -->
 <?xml version="1.0" encoding="UTF-8"?>
 <activity>
