@@ -79,6 +79,7 @@ get '/cfd' do
 end
 
 post '/pivotal-tracker' do
+  require 'net/http'
   content_type :xml
   raw_tracker_xml = request.body.read
   remote_pastelog raw_tracker_xml
@@ -96,11 +97,6 @@ end
 def import_activity(doc)
   story_id, current_status = parse_id_and_status(doc)
   story_status = StoryStatus.find(description: current_status)
-
-  @logger.log( "*" * 100 )
-  @logger.log( "story_id: #{story_id}, current_status: #{current_status}" )
-  @logger.log( "story_status: #{ story_status.inspect }" )
-  @logger.log( "*" * 100 )
 
   new_status_id = story_status.id
 
