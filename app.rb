@@ -79,16 +79,18 @@ get '/cfd' do
 end
 
 post '/pivotal-tracker' do
-  require 'logger'
-  @logger = Logger.new
-
-  @logger.log("*" * 100)
-  @logger.log("hello from API endpoint")
-  @logger.log("*" * 100)
-
   content_type :xml
-  import_activity Nokogiri::XML(request.body.read)
+  raw_tracker_xml = request.body.read
+  remote_pastelog raw_tracker_xml
+  import_activity Nokogiri::XML(raw_tracker_xml)
   "OK"
+end
+
+def remote_pastelog(xml)
+  http = Net::HTTP.new("requestb.in")
+  request = Net::HTTP::Post.new("/10yl6iy1")
+  request.body = xml
+  response = http.request(request)
 end
 
 def import_activity(doc)
