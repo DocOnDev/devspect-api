@@ -82,7 +82,7 @@ post '/pivotal-tracker' do
   require 'net/http'
   content_type :xml
   raw_tracker_xml = request.body.read
-  remote_pastelog raw_tracker_xml
+  # remote_pastelog raw_tracker_xml
   import_activity Nokogiri::XML(raw_tracker_xml)
   "OK"
 end
@@ -97,10 +97,11 @@ end
 
 def import_activity(doc)
   story_id, current_status = parse_id_and_status(doc)
+
   story_status = StoryStatus.find(description: current_status)
+  return unless story_status
 
-  new_status_id = story_status.id
-
+  new_status_id   = story_status.id
   current_history = StoryHistory.find(story_id: story_id, end_date: nil)
 
   # probably need to wrap this in a txn

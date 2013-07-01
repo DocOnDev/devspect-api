@@ -1,5 +1,6 @@
+<!-- EXAMPLE FROM WEBHOOK INTEGRATION DOC -->
+<!-- from https://www.pivotaltracker.com/help/integrations?version=v3#activity_web_hook -->
 <?xml version="1.0" encoding="UTF-8"?>
-
 <activity>
  <id type="integer">1031</id>
  <version type="integer">175</version>
@@ -18,4 +19,151 @@
  </stories>
 </activity>
 
-<!-- from https://www.pivotaltracker.com/help/integrations?version=v3#activity_web_hook -->
+<!-- SCHEDULING A STORY (UNSCHEDULED -> SCHEDULED -->
+<?xml version="1.0" encoding="UTF-8"?>
+<activity>
+  <id type="integer">381307107</id>
+  <version type="integer">588</version>
+  <event_type>story_update</event_type>
+  <occurred_at type="datetime">2013/07/01 17:52:05 UTC</occurred_at>
+  <author>Cory Flanigan</author>
+  <project_id type="integer">707539</project_id>
+  <description>Cory Flanigan edited &quot;Capture state changes for Points estimate&quot;</description>
+  <stories type="array">
+    <story>
+      <id type="integer">52652861</id>
+      <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52652861</url>
+      <current_state>unstarted</current_state>
+    </story>
+  </stories>
+</activity>
+
+<!-- UNSTARTING A STORY (CURRENT -> BACKLOG) -->
+<?xml version="1.0" encoding="UTF-8"?>
+<activity>
+  <id type="integer">381293335</id>
+  <version type="integer">581</version>
+  <event_type>story_update</event_type>
+  <occurred_at type="datetime">2013/07/01 17:32:25 UTC</occurred_at>
+  <author>Cory Flanigan</author>
+  <project_id type="integer">707539</project_id>
+  <description>Cory Flanigan unstarted &quot;Determine the cause of tracker webhook bug&quot;</description>
+  <stories type="array">
+    <story>
+      <id type="integer">52569341</id>
+      <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52569341</url>
+      <current_state>unstarted</current_state>
+    </story>
+  </stories>
+</activity>
+
+<!-- CREATING A CHORE -->
+
+<!-- CREATING A BUG -->
+
+<!-- CREATING A STORY -->
+<?xml version="1.0" encoding="UTF-8"?>
+<activity>
+  <id type="integer">381300435</id>
+  <version type="integer">585</version>
+  <event_type>story_create</event_type>
+  <occurred_at type="datetime">2013/07/01 17:42:51 UTC</occurred_at>
+  <author>Cory Flanigan</author>
+  <project_id type="integer">707539</project_id>
+  <description>Cory Flanigan added &quot;Test story to determine cause of webhook bug&quot;</description>
+  <stories type="array">
+    <story>
+      <id type="integer">52651969</id>
+      <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52651969</url>
+      <name>Test story to determine cause of webhook bug</name>
+      <story_type>feature</story_type>
+      <current_state>unscheduled</current_state>
+      <requested_by>Cory Flanigan</requested_by>
+    </story>
+  </stories>
+</activity>
+
+<!-- STARTING A CHORE -->
+<?xml version="1.0" encoding="UTF-8"?>
+<activity>
+  <id type="integer">381295685</id>
+  <version type="integer">582</version>
+  <event_type>story_update</event_type>
+  <occurred_at type="datetime">2013/07/01 17:36:02 UTC</occurred_at>
+  <author>Cory Flanigan</author>
+  <project_id type="integer">707539</project_id>
+  <description>Cory Flanigan started &quot;Determine the cause of tracker webhook bug&quot;</description>
+  <stories type="array">
+    <story>
+      <id type="integer">52569341</id>
+      <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52569341</url>
+      <current_state>started</current_state>
+    </story>
+  </stories>
+</activity>
+
+<!-- STARTING A BUG -->
+<?xml version="1.0" encoding="UTF-8"?>
+<activity>
+  <id type="integer">381299665</id>
+  <version type="integer">584</version>
+  <event_type>story_update</event_type>
+  <occurred_at type="datetime">2013/07/01 17:41:44 UTC</occurred_at>
+  <author>Cory Flanigan</author>
+  <project_id type="integer">707539</project_id>
+  <description>Cory Flanigan started &quot;Fix NoMethodError in Pivotal Tracker webhook endpoint&quot;</description>
+  <stories type="array">
+    <story>
+      <id type="integer">52507067</id>
+      <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52507067</url>
+      <current_state>started</current_state>
+    </story>
+  </stories>
+</activity>
+
+<!-- STARTING A STORY -->
+
+
+<!-- ESTIMATING A STORY -->
+<?xml version="1.0" encoding="UTF-8"?>
+<activity>
+  <id type="integer">381296099</id>
+  <version type="integer">583</version>
+  <event_type>story_update</event_type>
+  <occurred_at type="datetime">2013/07/01 17:36:43 UTC</occurred_at>
+  <author>Cory Flanigan</author>
+  <project_id type="integer">707539</project_id>
+  <description>Cory Flanigan estimated &quot;Create story from Tracker endpoint webhook call if one does not exist&quot; as 3 points</description>
+  <stories type="array">
+    <story>
+      <id type="integer">52569461</id>
+      <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52569461</url>
+      <estimate type="integer">3</estimate>
+    </story>
+  </stories>
+</activity>
+
+<!-- FINISHING A CHORE -->
+
+<!-- FINISHING A BUG -->
+
+<!-- FINISHING A STORY -->
+
+<!-- DELIVERING A CHORE -->
+
+<!-- DELIVERING A BUG -->
+
+<!-- DELIVERING A STORY -->
+
+<!-- REJECTING A CHORE -->
+
+<!-- REJECTING A BUG -->
+
+<!-- REJECTING A STORY -->
+
+<!-- ACCEPTING A CHORE -->
+
+<!-- ACCEPTING A BUG -->
+
+<!-- ACCEPTING A STORY -->
+

@@ -103,6 +103,7 @@ class AppTest < MiniTest::Unit::TestCase
     assert_equal expected, CumulativeFlow.new(description: "foxy", count: 3).to_hash
   end
 
+
   # def test_closing_history_when_none_exists
   #   assert close_history()
   # end
@@ -114,4 +115,17 @@ class AppTest < MiniTest::Unit::TestCase
   # def test_closing_history_when_changing_status
   #   # have history, changing to a new state
   # end
-end
+
+# Possible Pivotal Tracker State Changes:
+#
+# new story
+# estimate added to story
+# icebox -> backlog (unscheduled -> scheduled)
+# icebox -> current (unscheduled -> started)
+# backlog -> current (unstarted -> started)
+# started -> unstarted (current -> backlog)
+# started -> finished
+# finished -> delivered
+# delivered -> rejected
+# rejected -> started
+#
