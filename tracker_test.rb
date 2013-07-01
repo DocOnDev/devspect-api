@@ -10,19 +10,15 @@ describe Tracker do
   it 'creates a story' do
     tracker.handle_activity(xml_doc)
 
-    expected = [:create_story, story_attrs]
-
-    fake_story.data.length.must_equal 1
-    fake_story.data.first.must_equal expected
+    fake_story.messages.must_equal [:create_story]
+    fake_story.data.must_equal     [story_attrs]
   end
 
   it 'creates a history record on story creation' do
     tracker.handle_activity(xml_doc)
 
-    expected = [:create_history, history_attrs]
-
-    fake_history.data.length.must_equal 1
-    fake_history.data.first.must_equal  expected
+    fake_history.messages.must_equal [:create_history]
+    fake_history.data.must_equal     [history_attrs]
   end
 
   def teardown
@@ -31,14 +27,16 @@ describe Tracker do
   end
 
   class FakeModel
-    attr_reader :data
+    attr_reader :messages, :data
 
     def initialize
+      @messages = []
       @data = []
     end
 
     def method_missing(method_id, attrs)
-      @data << [method_id, attrs]
+      @messages << method_id
+      @data << attrs
     end
   end
 
