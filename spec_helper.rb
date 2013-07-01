@@ -3,11 +3,17 @@ require 'minitest/autorun'
 require 'minitest/pride'
 
 class FakeModel
+  @@instances = []
   attr_reader :messages, :data
 
   def initialize(*args)
     @messages = []
     @data = []
+    @@instances << self
+  end
+
+  def self.last_instance
+    @@instances.last
   end
 
   def method_missing(method_id, *attrs)

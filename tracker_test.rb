@@ -59,4 +59,49 @@ describe Tracker do
       "story_id"      => 52651969,
     }
   end
+
+  # def test_import_activity
+  #   # this test sucks
+  #   xml = Nokogiri::XML(File.read("pivotal.xml"))
+  #   assert_equal(nil, import_activity(xml))
+  # end
+
+  # def test_parsing_id_and_status
+  #   xml = Nokogiri::XML(File.read("pivotal.xml"))
+  #   assert_equal [109, "accepted"], parse_id_and_status(xml)
+  # end
+
+  # def test_close_history_predicate_returns_false_when_history_is_nil
+  #   refute close_history?(nil, 1)
+  # end
+
+  # def test_close_history_predicate_returns_false_when_status_ids_match
+  #   history = StoryHistory.new(status_id: 1)
+  #   refute close_history?(history, 1)
+  # end
+
+  # def test_close_history_predicate_returns_true_when_status_ids_do_not_match
+  #   history = StoryHistory.new(status_id: 1)
+  #   assert close_history?(history, 2)
+  # end
+
+  # def test_create_history_attrs_makes_a_hash_of_history_attributes
+  #   actual = history_attrs_for(1, 2)
+  #   assert_equal 1, actual[:story_id]
+  #   assert_equal 2, actual[:status_id]
+  # end
+
+  # def test_create_history_predicate_returns_false_when_valid_history_exists
+  #   h = StoryHistory.new(history_attrs_for(1, 2)).save
+  #   refute create_history?(1, 2)
+  #   h.delete
+  # end
+
+  # def test_create_history_predicate_returns_true_when_no_history_exists
+  #   attrs = { story_id: 1, status_id: 2 }
+  #   h = StoryHistory.find(attrs)
+  #   h && h.delete
+  #   assert create_history?(1, 2)
+  # end
+
 end
