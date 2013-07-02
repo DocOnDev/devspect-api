@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 
 require 'time'
 require 'nokogiri'
-require_relative 'tracker'
+require_relative '../lib/tracker'
 
 describe Tracker do
   it 'creates a story' do

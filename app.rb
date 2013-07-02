@@ -6,7 +6,7 @@ require 'sinatra'
 require 'nokogiri'
 
 require_relative 'models'
-require_relative 'tracker'
+require_relative 'lib/tracker'
 
 class DevSpectAPI < Sinatra::Base
   class << self
