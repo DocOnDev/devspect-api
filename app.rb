@@ -28,20 +28,11 @@ class DevSpectAPI < Sinatra::Base
   end
 
   post '/pivotal-tracker' do
-    require 'net/http'
     content_type :xml
-    raw_tracker_xml = request.body.read
-    remote_pastelog raw_tracker_xml
 
-    self.class.pivotal_tracker_service.handle_activity(Nokogiri::XML(raw_tracker_xml))
+    activity_hash = self.class.parse_tracker_xml(request.body.read)
+    self.class.pivotal_tracker_service.handle_activity activity_hash
     "OK"
-  end
-
-  def remote_pastelog(xml)
-    http = Net::HTTP.new("requestb.in")
-    request = Net::HTTP::Post.new("/10yl6iy1")
-    request.body = xml
-    http.request(request)
   end
 
   def self.parse_tracker_xml(xml)

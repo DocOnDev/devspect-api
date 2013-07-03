@@ -31,12 +31,11 @@ describe 'devspect-api' do
     last_response.body.must_equal "OK"
   end
 
-  # change this test, it will pass a hash
-  it 'passes an xml document to Tracker.handle_activity' do
+  it 'passes a hash to Tracker.handle_activity' do
     post "/pivotal-tracker", Fixtures.create_story_xml
 
     app.pivotal_tracker_service.messages.must_equal [:handle_activity]
-    app.pivotal_tracker_service.data.flatten.first.must_be_instance_of Nokogiri::XML::Document
+    app.pivotal_tracker_service.data.flatten.first.must_equal Fixtures.create_story_hash
   end
 
   it 'parses xml from Pivotal Tracker into a hash' do
