@@ -63,6 +63,8 @@ class CumulativeFlow < Sequel::Model(:cfd_summary)
   def self.hash_key_for(description)
     STATUS_MAP.invert[description] || description.to_sym
   end
+end
+
   # def close_history?(history, new_status_id)
   #   history && history.status_id != new_status_id                     end
   # end

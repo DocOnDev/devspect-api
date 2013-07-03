@@ -24,7 +24,7 @@ class FakeModel
 end
 
 class Fixtures
-  def self.create_story_xml
+  def self.create_story_xml(story_id=52651969)
     %Q{
       <?xml version="1.0" encoding="UTF-8"?>
       <activity>
@@ -37,8 +37,8 @@ class Fixtures
         <description>Cory Flanigan added &quot;Test story to determine cause of webhook bug&quot;</description>
         <stories type="array">
           <story>
-            <id type="integer">52651969</id>
-            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52651969</url>
+            <id type="integer">#{ story_id }</id>
+            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/#{story_id}</url>
             <name>Test story to determine cause of webhook bug</name>
             <story_type>feature</story_type>
             <description>Does this give us different xml?</description>
@@ -52,7 +52,7 @@ class Fixtures
     }
   end
 
-  def self.update_estimate_xml
+  def self.update_estimate_xml(story_id=52569461)
     %Q{
       <?xml version="1.0" encoding="UTF-8"?>
       <activity>
@@ -65,8 +65,8 @@ class Fixtures
         <description>Cory Flanigan estimated &quot;Create story from Tracker endpoint webhook call if one does not exist&quot; as 3 points</description>
         <stories type="array">
           <story>
-            <id type="integer">52569461</id>
-            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52569461</url>
+            <id type="integer">#{ story_id }</id>
+            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/#{ story_id }</url>
             <estimate type="integer">3</estimate>
           </story>
         </stories>

@@ -43,4 +43,27 @@ class DevSpectAPI < Sinatra::Base
     request.body = xml
     http.request(request)
   end
+
+  def self.parse_tracker_xml(xml)
+    doc = Nokogiri::XML(xml)
+    { "event_type"    => get_attr(doc, "event_type"),
+      "occurred_at"   => DateTime.parse(get_attr(doc, "occurred_at")),
+      "project_id"    => get_attr(doc, "project_id").to_i,
+      "story"         =>
+        { "id"            => get_attr(doc, "story/id").to_i,
+          "url"           => get_attr(doc, "story/url"),
+          "name"          => get_attr(doc, "story/name"),
+          "story_type"    => get_attr(doc, "story/story_type"),
+          "description"   => get_attr(doc, "story/description"),
+          "estimate"      => get_attr(doc, "story/estimate").to_i,
+          "current_state" => get_attr(doc, "story/current_state"),
+          "owned_by"      => get_attr(doc, "story/owned_by"),
+          "requested_by"  => get_attr(doc, "story/requested_by")
+      }.reject {|k, v| v.to_s.empty? }
+    }
+  end
+
+  def self.get_attr(doc, attr)
+    (doc / attr).text
+  end
 end
