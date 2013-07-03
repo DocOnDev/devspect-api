@@ -40,20 +40,20 @@ describe 'devspect-api' do
   end
 
   it 'parses xml from Pivotal Tracker into a hash' do
-    xml = Fixtures.create_story_xml(1234)
+    xml = Fixtures.create_story_xml
 
-    app.parse_tracker_xml(xml).must_equal Fixtures.create_story_hash(1234)
+    app.parse_tracker_xml(xml).must_equal Fixtures.create_story_hash
   end
 
   it 'returns a dense hash' do
-    xml = Fixtures.update_estimate_xml(1234)
+    xml = Fixtures.update_estimate_xml
 
-    app.parse_tracker_xml(xml).must_equal Fixtures.update_estimate_hash(1234)
+    app.parse_tracker_xml(xml).must_equal Fixtures.update_estimate_hash
   end
 
   it 'handles zero values' do
-    xml = Fixtures.update_current_state_xml(1234)
+    xml = Fixtures.update_current_state_xml
 
-    app.parse_tracker_xml(xml).must_equal Fixtures.update_current_state_hash(1234)
+    app.parse_tracker_xml(xml).must_equal Fixtures.update_current_state_hash
   end
 end

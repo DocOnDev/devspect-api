@@ -24,7 +24,7 @@ class FakeModel
 end
 
 class Fixtures
-  def self.create_story_xml(story_id=52651969)
+  def self.create_story_xml(story_id=1234)
     %Q{
       <?xml version="1.0" encoding="UTF-8"?>
       <activity>
@@ -52,7 +52,7 @@ class Fixtures
     }
   end
 
-  def self.update_estimate_xml(story_id=52569461)
+  def self.update_estimate_xml(story_id=1234)
     %Q{
       <?xml version="1.0" encoding="UTF-8"?>
       <activity>
@@ -74,7 +74,7 @@ class Fixtures
     }
   end
 
-  def self.update_description_xml
+  def self.update_description_xml(story_id=1234)
     %Q{
       <activity>
         <id type="integer">382622803</id>
@@ -86,8 +86,8 @@ class Fixtures
         <description>Cory Flanigan edited &quot;Capture state changes for Points estimate&quot;</description>
         <stories type="array">
           <story>
-            <id type="integer">52652861</id>
-            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52652861</url>
+            <id type="integer">#{ story_id }</id>
+            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/#{ story_id }</url>
             <description>Not exactly sure what this story means anymore.</description>
           </story>
         </stories>
@@ -95,7 +95,7 @@ class Fixtures
     }
   end
 
-  def self.update_current_state_xml(story_id=52652861)
+  def self.update_current_state_xml(story_id=1234)
     %Q{
       <?xml version="1.0" encoding="UTF-8"?>
       <activity>
