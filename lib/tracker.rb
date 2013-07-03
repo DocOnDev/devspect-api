@@ -9,7 +9,7 @@ class Tracker
   end
 
   def handle_activity(activity)
-    if event_type(activity).eql?(:create)
+    if event_type(activity).eql?(:create_story)
       story_id    = (activity / "story/id").text.to_i
       created_at  = DateTime.parse((activity / "occurred_at").text)
 
@@ -34,16 +34,28 @@ class Tracker
       self.story_model.create_story(story_attrs)
       self.history_model.create_history(history_attrs)
 
-    elsif event_type(activity).eql?(:update)
+    elsif event_type(activity).eql?(:update_estimate)
       story_id = (activity / "story/id").text.to_i
       estimate = (activity / "story/estimate").text.to_i
 
       self.story_model.update_estimate(story_id, estimate)
+    elsif event_type(activity).eql?(:update_current_state)
+      new_status = (activity / "story/current_state").text
+      self.history_model.update_status_history(52652861, new_status)
     end
   end
 
   def event_type(activity)
-    (activity / "event_type").text.gsub(/story_/, '').to_sym
+    e = (activity / "event_type").text.gsub(/story_/, '')
+    case e
+    when "create" then :create_story
+    when "update"
+    then
+       type = [:estimate, :description, :current_state].detect { |a|
+         not (activity / "story/#{a}").text.empty?
+       }
+       :"update_#{ type }"
+    end
   end
 end
 

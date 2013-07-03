@@ -106,6 +106,24 @@
 </stories>
 </activity>
 
+<!-- UPDATING A STORY DESCRIPTION -->
+<?xml version="1.0" encoding="UTF-8"?>
+<activity>
+  <id type="integer">382622803</id>
+  <version type="integer">634</version>
+  <event_type>story_update</event_type>
+  <occurred_at type="datetime">2013/07/03 17:55:44 UTC</occurred_at>
+  <author>Cory Flanigan</author>
+  <project_id type="integer">707539</project_id>
+  <description>Cory Flanigan edited &quot;Capture state changes for Points estimate&quot;</description>
+  <stories type="array">
+    <story>
+      <id type="integer">52652861</id>
+      <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52652861</url>
+      <description>Not exactly sure what this story means anymore.</description>
+    </story>
+  </stories>
+</activity>
 
 <!-- DELETING A STORY -->
 <?xml version="1.0" encoding="UTF-8"?>

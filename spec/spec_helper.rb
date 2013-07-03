@@ -1,6 +1,7 @@
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'pry'
 
 class FakeModel
   @@instances = []
@@ -51,30 +52,6 @@ class Fixtures
     }
   end
 
-  def self.update_story_xml
-    %Q{
-      <?xml version="1.0" encoding="UTF-8"?>
-      <activity>
-       <id type="integer">1031</id>
-       <version type="integer">175</version>
-       <event_type>story_update</event_type>
-       <occurred_at type="datetime">2009/12/14 14:12:09 PST</occurred_at>
-       <author>James Kirk</author>
-       <project_id type="integer">26</project_id>
-       <description>James Kirk accepted &quot;More power to shields&quot;</description>
-       <stories>
-         <story>
-           <id type="integer">109</id>
-           <url>https:///projects/26/stories/109</url>
-           <accepted_at type="datetime">2009/12/14 22:12:09 UTC</accepted_at>
-           <current_state>accepted</current_state>
-         </story>
-       </stories>
-      </activity>
-    }
-
-  end
-
   def self.update_estimate_xml
     %Q{
       <?xml version="1.0" encoding="UTF-8"?>
@@ -91,6 +68,49 @@ class Fixtures
             <id type="integer">52569461</id>
             <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52569461</url>
             <estimate type="integer">3</estimate>
+          </story>
+        </stories>
+      </activity>
+    }
+  end
+
+  def self.update_description_xml
+    %Q{
+      <activity>
+        <id type="integer">382622803</id>
+        <version type="integer">634</version>
+        <event_type>story_update</event_type>
+        <occurred_at type="datetime">2013/07/03 17:55:44 UTC</occurred_at>
+        <author>Cory Flanigan</author>
+        <project_id type="integer">707539</project_id>
+        <description>Cory Flanigan edited &quot;Capture state changes for Points estimate&quot;</description>
+        <stories type="array">
+          <story>
+            <id type="integer">52652861</id>
+            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52652861</url>
+            <description>Not exactly sure what this story means anymore.</description>
+          </story>
+        </stories>
+      </activity>
+    }
+  end
+
+  def self.update_current_state_xml
+    %Q{
+      <?xml version="1.0" encoding="UTF-8"?>
+      <activity>
+        <id type="integer">381307107</id>
+        <version type="integer">588</version>
+        <event_type>story_update</event_type>
+        <occurred_at type="datetime">2013/07/01 17:52:05 UTC</occurred_at>
+        <author>Cory Flanigan</author>
+        <project_id type="integer">707539</project_id>
+        <description>Cory Flanigan edited &quot;Capture state changes for Points estimate&quot;</description>
+        <stories type="array">
+          <story>
+            <id type="integer">52652861</id>
+            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52652861</url>
+            <current_state>unstarted</current_state>
           </story>
         </stories>
       </activity>

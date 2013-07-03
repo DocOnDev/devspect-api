@@ -19,15 +19,24 @@ describe Tracker do
   end
 
   it 'updates a story when the estimate is changed' do
-    tracker.handle_activity(change_estimate_xml_doc)
+    tracker.handle_activity(update_estimate_xml_doc)
 
     fake_story.messages.must_equal     [:update_estimate]
     fake_story.data.flatten.must_equal [52569461, 3]
   end
 
-  it 'event_type parses and returns the event type text' do
-    tracker.event_type(create_story_xml_doc).must_equal(:create)
-    tracker.event_type(update_story_xml_doc).must_equal(:update)
+  it 'updates status history when the current_state is changed' do
+    tracker.handle_activity(update_current_state_xml_doc)
+
+    fake_history.messages.must_equal     [:update_status_history]
+    fake_history.data.flatten.must_equal [52652861, "unstarted"]
+  end
+
+  it 'event_type parses and returns the event type' do
+    tracker.event_type(create_story_xml_doc).must_equal(:create_story)
+    tracker.event_type(update_estimate_xml_doc).must_equal(:update_estimate)
+    tracker.event_type(update_description_xml_doc).must_equal(:update_description)
+    tracker.event_type(update_current_state_xml_doc).must_equal(:update_current_state)
   end
 
   def teardown
@@ -51,12 +60,16 @@ describe Tracker do
     @create_story_doc ||= Nokogiri::XML(Fixtures.create_story_xml)
   end
 
-  def update_story_xml_doc
-    @update_story_doc ||= Nokogiri::XML(Fixtures.update_story_xml)
+  def update_estimate_xml_doc
+    @update_estimate_doc ||= Nokogiri::XML(Fixtures.update_estimate_xml)
   end
 
-  def change_estimate_xml_doc
-    @change_estimate_doc ||= Nokogiri::XML(Fixtures.update_estimate_xml)
+  def update_description_xml_doc
+    @update_description_doc ||= Nokogiri::XML(Fixtures.update_description_xml)
+  end
+
+  def update_current_state_xml_doc
+    @update_current_state_xml_doc ||= Nokogiri::XML(Fixtures.update_current_state_xml)
   end
 
   def story_attrs
