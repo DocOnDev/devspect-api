@@ -46,6 +46,10 @@ class DevSpectAPI < Sinatra::Base
 
   def self.parse_tracker_xml(xml)
     doc = Nokogiri::XML(xml)
+
+    estimate = get_attr(doc, "story/estimate")
+    estimate = estimate.to_i unless estimate.empty?
+
     { "event_type"    => get_attr(doc, "event_type"),
       "occurred_at"   => DateTime.parse(get_attr(doc, "occurred_at")),
       "project_id"    => get_attr(doc, "project_id").to_i,
@@ -55,7 +59,7 @@ class DevSpectAPI < Sinatra::Base
           "name"          => get_attr(doc, "story/name"),
           "story_type"    => get_attr(doc, "story/story_type"),
           "description"   => get_attr(doc, "story/description"),
-          "estimate"      => get_attr(doc, "story/estimate").to_i,
+          "estimate"      => estimate,
           "current_state" => get_attr(doc, "story/current_state"),
           "owned_by"      => get_attr(doc, "story/owned_by"),
           "requested_by"  => get_attr(doc, "story/requested_by")

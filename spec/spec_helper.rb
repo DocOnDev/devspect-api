@@ -31,7 +31,7 @@ class Fixtures
         <id type="integer">381300435</id>
         <version type="integer">585</version>
         <event_type>story_create</event_type>
-        <occurred_at type="datetime">2013/07/01 17:42:51 UTC</occurred_at>
+        <occurred_at type="datetime">#{ timestamp }</occurred_at>
         <author>Cory Flanigan</author>
         <project_id type="integer">707539</project_id>
         <description>Cory Flanigan added &quot;Test story to determine cause of webhook bug&quot;</description>
@@ -59,7 +59,7 @@ class Fixtures
         <id type="integer">381296099</id>
         <version type="integer">583</version>
         <event_type>story_update</event_type>
-        <occurred_at type="datetime">2013/07/01 17:36:43 UTC</occurred_at>
+        <occurred_at type="datetime">#{ timestamp }</occurred_at>
         <author>Cory Flanigan</author>
         <project_id type="integer">707539</project_id>
         <description>Cory Flanigan estimated &quot;Create story from Tracker endpoint webhook call if one does not exist&quot; as 3 points</description>
@@ -80,7 +80,7 @@ class Fixtures
         <id type="integer">382622803</id>
         <version type="integer">634</version>
         <event_type>story_update</event_type>
-        <occurred_at type="datetime">2013/07/03 17:55:44 UTC</occurred_at>
+        <occurred_at type="datetime">#{ timestamp }</occurred_at>
         <author>Cory Flanigan</author>
         <project_id type="integer">707539</project_id>
         <description>Cory Flanigan edited &quot;Capture state changes for Points estimate&quot;</description>
@@ -95,25 +95,29 @@ class Fixtures
     }
   end
 
-  def self.update_current_state_xml
+  def self.update_current_state_xml(story_id=52652861)
     %Q{
       <?xml version="1.0" encoding="UTF-8"?>
       <activity>
         <id type="integer">381307107</id>
         <version type="integer">588</version>
         <event_type>story_update</event_type>
-        <occurred_at type="datetime">2013/07/01 17:52:05 UTC</occurred_at>
+        <occurred_at type="datetime">#{ timestamp }</occurred_at>
         <author>Cory Flanigan</author>
         <project_id type="integer">707539</project_id>
         <description>Cory Flanigan edited &quot;Capture state changes for Points estimate&quot;</description>
         <stories type="array">
           <story>
-            <id type="integer">52652861</id>
-            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/52652861</url>
+            <id type="integer">#{ story_id }</id>
+            <url>http://www.pivotaltracker.com/services/v3/projects/707539/stories/#{ story_id }</url>
             <current_state>unstarted</current_state>
           </story>
         </stories>
       </activity>
     }
+  end
+
+  def self.timestamp
+    "2013/07/04 12:00:00 UTC"
   end
 end

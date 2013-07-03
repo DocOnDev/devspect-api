@@ -44,7 +44,7 @@ describe 'devspect-api' do
 
     expected = {
       "event_type"    => "story_create",
-      "occurred_at"   => DateTime.parse("2013/07/01 17:42:51 UTC"),
+      "occurred_at"   => DateTime.parse(Fixtures.timestamp),
       "project_id"    => 707539,
       "story"         =>
         { "id"            => 1234,
@@ -67,12 +67,29 @@ describe 'devspect-api' do
 
     expected = {
       "event_type"    => "story_update",
-      "occurred_at"   => DateTime.parse("2013/07/01 17:36:43 UTC"),
+      "occurred_at"   => DateTime.parse(Fixtures.timestamp),
       "project_id"    => 707539,
       "story"         =>
         { "id"            => 1234,
           "url"           => "http://www.pivotaltracker.com/services/v3/projects/707539/stories/1234",
-          "estimate"      => 3,
+          "estimate"      => 3
+        }
+    }
+
+    app.parse_tracker_xml(xml).must_equal expected
+  end
+
+  it 'handles zero values' do
+    xml = Fixtures.update_current_state_xml(1234)
+
+    expected = {
+      "event_type"    => "story_update",
+      "occurred_at"   => DateTime.parse(Fixtures.timestamp),
+      "project_id"    => 707539,
+      "story"         =>
+        { "id"            => 1234,
+          "url"           => "http://www.pivotaltracker.com/services/v3/projects/707539/stories/1234",
+          "current_state" => "unstarted"
         }
     }
 
