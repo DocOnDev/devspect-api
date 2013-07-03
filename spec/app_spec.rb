@@ -42,57 +42,18 @@ describe 'devspect-api' do
   it 'parses xml from Pivotal Tracker into a hash' do
     xml = Fixtures.create_story_xml(1234)
 
-    expected = {
-      "event_type"    => "story_create",
-      "occurred_at"   => DateTime.parse(Fixtures.timestamp),
-      "project_id"    => 707539,
-      "story"         =>
-        { "id"            => 1234,
-          "url"           => "http://www.pivotaltracker.com/services/v3/projects/707539/stories/1234",
-          "name"          => "Test story to determine cause of webhook bug",
-          "story_type"    => "feature",
-          "description"   => "Does this give us different xml?",
-          "estimate"      => 2,
-          "current_state" => "unscheduled",
-          "owned_by"      => "Cory Flanigan",
-          "requested_by"  => "Cory Flanigan"
-        }
-    }
-
-    app.parse_tracker_xml(xml).must_equal expected
+    app.parse_tracker_xml(xml).must_equal Fixtures.create_story_hash(1234)
   end
 
   it 'returns a dense hash' do
     xml = Fixtures.update_estimate_xml(1234)
 
-    expected = {
-      "event_type"    => "story_update",
-      "occurred_at"   => DateTime.parse(Fixtures.timestamp),
-      "project_id"    => 707539,
-      "story"         =>
-        { "id"            => 1234,
-          "url"           => "http://www.pivotaltracker.com/services/v3/projects/707539/stories/1234",
-          "estimate"      => 3
-        }
-    }
-
-    app.parse_tracker_xml(xml).must_equal expected
+    app.parse_tracker_xml(xml).must_equal Fixtures.update_estimate_hash(1234)
   end
 
   it 'handles zero values' do
     xml = Fixtures.update_current_state_xml(1234)
 
-    expected = {
-      "event_type"    => "story_update",
-      "occurred_at"   => DateTime.parse(Fixtures.timestamp),
-      "project_id"    => 707539,
-      "story"         =>
-        { "id"            => 1234,
-          "url"           => "http://www.pivotaltracker.com/services/v3/projects/707539/stories/1234",
-          "current_state" => "unstarted"
-        }
-    }
-
-    app.parse_tracker_xml(xml).must_equal expected
+    app.parse_tracker_xml(xml).must_equal Fixtures.update_current_state_hash(1234)
   end
 end

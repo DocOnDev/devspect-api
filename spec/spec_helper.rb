@@ -117,6 +117,48 @@ class Fixtures
     }
   end
 
+  def self.create_story_hash(story_id=1234)
+    { "event_type"    => "story_create",
+      "occurred_at"   => DateTime.parse(Fixtures.timestamp),
+      "project_id"    => 707539,
+      "story"         =>
+        { "id"            => story_id,
+          "url"           => "http://www.pivotaltracker.com/services/v3/projects/707539/stories/#{ story_id }",
+          "name"          => "Test story to determine cause of webhook bug",
+          "story_type"    => "feature",
+          "description"   => "Does this give us different xml?",
+          "estimate"      => 2,
+          "current_state" => "unscheduled",
+          "owned_by"      => "Cory Flanigan",
+          "requested_by"  => "Cory Flanigan"
+        }
+    }
+  end
+
+  def self.update_estimate_hash(story_id=1234)
+    { "event_type"    => "story_update",
+      "occurred_at"   => DateTime.parse(Fixtures.timestamp),
+      "project_id"    => 707539,
+      "story"         =>
+        { "id"            => story_id,
+          "url"           => "http://www.pivotaltracker.com/services/v3/projects/707539/stories/#{ story_id }",
+          "estimate"      => 3
+        }
+    }
+  end
+
+  def self.update_current_state_hash(story_id=1234)
+    { "event_type"    => "story_update",
+      "occurred_at"   => DateTime.parse(Fixtures.timestamp),
+      "project_id"    => 707539,
+      "story"         =>
+        { "id"            => 1234,
+          "url"           => "http://www.pivotaltracker.com/services/v3/projects/707539/stories/1234",
+          "current_state" => "unstarted"
+        }
+    }
+  end
+
   def self.timestamp
     "2013/07/04 12:00:00 UTC"
   end
