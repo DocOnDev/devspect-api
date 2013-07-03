@@ -1,22 +1,33 @@
 require_relative 'spec_helper'
 
-require 'time'
 require 'nokogiri'
 require_relative '../lib/tracker'
 
 describe Tracker do
   it 'creates a story' do
-    tracker.handle_activity(xml_doc)
+    tracker.handle_activity(create_story_xml_doc)
 
     fake_story.messages.must_equal     [:create_story]
     fake_story.data.flatten.must_equal [story_attrs]
   end
 
   it 'creates a history record on story creation' do
-    tracker.handle_activity(xml_doc)
+    tracker.handle_activity(create_story_xml_doc)
 
     fake_history.messages.must_equal     [:create_history]
     fake_history.data.flatten.must_equal [history_attrs]
+  end
+
+  it 'updates a story when the estimate is changed' do
+    tracker.handle_activity(change_estimate_xml_doc)
+
+    fake_story.messages.must_equal     [:update_estimate]
+    fake_story.data.flatten.must_equal [52569461, 3]
+  end
+
+  it 'event_type parses and returns the event type text' do
+    tracker.event_type(create_story_xml_doc).must_equal(:create)
+    tracker.event_type(update_story_xml_doc).must_equal(:update)
   end
 
   def teardown
@@ -36,8 +47,16 @@ describe Tracker do
     @fake_history ||= FakeModel.new
   end
 
-  def xml_doc
-    doc = Nokogiri::XML(Fixtures.create_story_xml)
+  def create_story_xml_doc
+    @create_story_doc ||= Nokogiri::XML(Fixtures.create_story_xml)
+  end
+
+  def update_story_xml_doc
+    @update_story_doc ||= Nokogiri::XML(Fixtures.update_story_xml)
+  end
+
+  def change_estimate_xml_doc
+    @change_estimate_doc ||= Nokogiri::XML(Fixtures.update_estimate_xml)
   end
 
   def story_attrs
@@ -71,37 +90,17 @@ describe Tracker do
   #   assert_equal [109, "accepted"], parse_id_and_status(xml)
   # end
 
-  # def test_close_history_predicate_returns_false_when_history_is_nil
-  #   refute close_history?(nil, 1)
-  # end
-
-  # def test_close_history_predicate_returns_false_when_status_ids_match
-  #   history = StoryHistory.new(status_id: 1)
-  #   refute close_history?(history, 1)
-  # end
-
-  # def test_close_history_predicate_returns_true_when_status_ids_do_not_match
-  #   history = StoryHistory.new(status_id: 1)
-  #   assert close_history?(history, 2)
-  # end
-
-  # def test_create_history_attrs_makes_a_hash_of_history_attributes
-  #   actual = history_attrs_for(1, 2)
-  #   assert_equal 1, actual[:story_id]
-  #   assert_equal 2, actual[:status_id]
-  # end
-
-  # def test_create_history_predicate_returns_false_when_valid_history_exists
-  #   h = StoryHistory.new(history_attrs_for(1, 2)).save
-  #   refute create_history?(1, 2)
-  #   h.delete
-  # end
-
-  # def test_create_history_predicate_returns_true_when_no_history_exists
-  #   attrs = { story_id: 1, status_id: 2 }
-  #   h = StoryHistory.find(attrs)
-  #   h && h.delete
-  #   assert create_history?(1, 2)
-  # end
-
+# Possible Pivotal Tracker State Changes:
+#
+# new story
+# estimate added to story
+# icebox -> backlog (unscheduled -> scheduled)
+# icebox -> current (unscheduled -> started)
+# backlog -> current (unstarted -> started)
+# started -> unstarted (current -> backlog)
+# started -> finished
+# finished -> delivered
+# delivered -> rejected
+# rejected -> started
+#
 end
